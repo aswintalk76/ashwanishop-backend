@@ -1,0 +1,6 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Use when the host document root is the Laravel project root (not public/)
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>

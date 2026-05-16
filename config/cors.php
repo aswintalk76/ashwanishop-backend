@@ -1,6 +1,6 @@
 <?php
 
-$frontendUrl = env('FRONTEND_URL', 'http://localhost:3000');
+$frontendUrl = rtrim((string) env('FRONTEND_URL', 'http://localhost:3000'), '/');
 
 return [
 
@@ -12,17 +12,24 @@ return [
         $frontendUrl,
         'http://localhost:3000',
         'http://127.0.0.1:3000',
+        'https://ashwanishop.helloashwani.site',
+        'https://www.ashwanishop.helloashwani.site',
     ]))),
 
-    'allowed_origins_patterns' => [],
+  // Allow any helloashwani.site subdomain (frontend + staging)
+    'allowed_origins_patterns' => [
+        '#^https?://([a-z0-9-]+\\.)*helloashwani\\.site$#',
+        '#^https?://localhost(:\\d+)?$#',
+        '#^https?://127\\.0\\.0\\.1(:\\d+)?$#',
+    ],
 
     'allowed_headers' => ['*'],
 
     'exposed_headers' => [],
 
-    'max_age' => 0,
+    'max_age' => 86400,
 
-    // Must be true when frontend sends cookies; requires explicit origins (not *)
-    'supports_credentials' => true,
+    // Bearer tokens only — must be false for simple cross-origin API calls
+    'supports_credentials' => false,
 
 ];
