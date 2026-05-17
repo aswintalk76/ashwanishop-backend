@@ -101,7 +101,9 @@ class OrderService
 
     public function verifyPayment(Order $order, int $adminId): Order
     {
-        return DB::transaction(function () use ($order, $adminId) {
+        $plainToken = null;
+
+        $order = DB::transaction(function () use ($order, $adminId, &$plainToken) {
             $order->payment->update([
                 'status' => 'verified',
                 'verified_by' => $adminId,
@@ -113,12 +115,14 @@ class OrderService
             $qrToken = $this->qrService->generateDeliveryToken($order);
             $plainToken = $qrToken->plain_token ?? null;
 
-            SendOrderConfirmationEmail::dispatch($order, $plainToken);
-            PaymentVerified::dispatch($order);
-            $this->whatsAppService->notifyAdminPaymentVerified($order);
-
             return $order->fresh(['items', 'payment', 'user']);
         });
+
+        SendOrderConfirmationEmail::dispatch($order, $plainToken);
+        PaymentVerified::dispatch($order);
+        $this->whatsAppService->notifyAdminPaymentVerified($order);
+
+        return $order;
     }
 
     public function markDelivered(Order $order, int $adminId): Order

@@ -28,8 +28,13 @@ class SendOrderConfirmationEmail implements ShouldQueue
         $qrBase64 = null;
 
         if ($this->plainDeliveryToken) {
-            $payload = $qrService->getDeliveryQrPayload($this->plainDeliveryToken, $order->order_number);
-            $qrBase64 = $qrService->generateQrImage($payload);
+            try {
+                $payload = $qrService->getDeliveryQrPayload($this->plainDeliveryToken, $order->order_number);
+                $qrBase64 = $qrService->generateQrImage($payload);
+            } catch (\Throwable) {
+                // GD may be disabled locally; customer still sees QR on the order page (client-rendered).
+                $qrBase64 = null;
+            }
         }
 
         $log = EmailLog::create([

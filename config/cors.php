@@ -12,6 +12,9 @@ return [
         $frontendUrl,
         'http://localhost:3000',
         'http://127.0.0.1:3000',
+        'https://ashwanishop.helloashwani.site',
+        'https://www.ashwanishop.helloashwani.site',
+
     ]))),
 
     'allowed_origins_patterns' => [],

@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
         Setting::set('site_tagline', 'Premium Shopping Experience', 'general');
         Setting::set('contact_email', 'aswintalk76@gmail.com', 'general');
         Setting::set('contact_phone', '+91 7619850994', 'general');
-        Setting::set('upi_id', 'ashwanishop@upi', 'payment');
+        Setting::set('upi_id', '7619850994@upi', 'payment');
 
         $categories = [
             ['name' => 'Electronics', 'slug' => 'electronics'],
