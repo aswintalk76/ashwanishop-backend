@@ -14,10 +14,19 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
+            'name' => 'required|string|min:2|max:255',
+            'email' => 'required|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
-            'phone' => 'nullable|string|max:20',
+            'phone' => 'nullable|string|min:10|max:15',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'email.unique' => 'This email is already registered. Please sign in instead.',
+            'password.confirmed' => 'Password and confirm password do not match.',
+            'phone.min' => 'Phone number must be at least 10 digits.',
         ];
     }
 }

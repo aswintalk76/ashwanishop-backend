@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class AuthController extends Controller
 {
@@ -32,6 +33,7 @@ class AuthController extends Controller
             'phone' => $request->phone,
         ]);
 
+        Role::firstOrCreate(['name' => 'user', 'guard_name' => 'web']);
         $user->assignRole('user');
         $user->sendEmailVerificationNotification();
 

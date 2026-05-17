@@ -43,8 +43,8 @@ class DatabaseSeeder extends Seeder
 
         Setting::set('site_name', 'Ashwani Shop', 'general');
         Setting::set('site_tagline', 'Premium Shopping Experience', 'general');
-        Setting::set('contact_email', 'support@ashwanishop.com', 'general');
-        Setting::set('contact_phone', '+91 9876543210', 'general');
+        Setting::set('contact_email', 'aswintalk76@gmail.com', 'general');
+        Setting::set('contact_phone', '+91 7619850994', 'general');
         Setting::set('upi_id', 'ashwanishop@upi', 'payment');
 
         $categories = [
